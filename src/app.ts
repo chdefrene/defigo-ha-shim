@@ -10,7 +10,7 @@ app.use(bodyParser.text());
 /**
  * Get the current state of the provided doorbell
  */
-app.get("/doorbell/:doorbellId", async (req, res) => {
+app.get("/doorbells/:doorbellId", async (req, res) => {
   const { doorbellId } = req.params;
 
   const state = await getState(doorbellId);
@@ -25,7 +25,7 @@ app.get("/doorbell/:doorbellId", async (req, res) => {
  * Since the doorbell is configured to auto-lock,
  * sending "ON" will not perform any API calls.
  */
-app.post("/doorbell/:doorbellId", async (req, res) => {
+app.post("/doorbells/:doorbellId", async (req, res) => {
   const { doorbellId } = req.params;
 
   let status = 200;

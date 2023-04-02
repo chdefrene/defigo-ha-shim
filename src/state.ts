@@ -3,7 +3,7 @@ import fs from "fs";
 import { AUTO_LOCK_TIMEOUT } from "./defigo";
 
 interface State {
-  isOpen: boolean;
+  is_open: boolean;
 }
 
 function getFilePath(doorbellId: string) {
@@ -27,7 +27,7 @@ export function getState(doorbellId: string): State {
   try {
     return decode(fs.readFileSync(filePath));
   } catch {
-    return { isOpen: false };
+    return { is_open: false };
   }
 }
 
@@ -38,13 +38,13 @@ export function getState(doorbellId: string): State {
  */
 export function setState(doorbellId: string) {
   const filePath = getFilePath(doorbellId);
-  const state: State = { isOpen: true };
+  const state: State = { is_open: true };
 
   try {
     fs.writeFileSync(filePath, encode(state));
 
     setTimeout(() => {
-      state.isOpen = true;
+      state.is_open = true;
       fs.writeFileSync(filePath, encode(state));
     }, AUTO_LOCK_TIMEOUT);
   } catch {}

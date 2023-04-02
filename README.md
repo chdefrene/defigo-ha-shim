@@ -17,22 +17,21 @@ defigo:
 
 Now you can follow the Home Assistant instructions for setting up a [RESTful Switch](https://www.home-assistant.io/integrations/switch.rest/).
 
+Example configuration.yaml:
+
+```yaml
+switch:
+    - platform: rest
+      name: Entrance
+      resource: http://localhost:3000/doorbells/<doorbell_id>
+      is_on_template: "{{ value_json.is_open }}"
+      headers:
+        Content-Type: text/plain
+        Authorization: !secret defigo_access_token
+```
+
 ### Important details:
 
-For `resource`, enter
+`<doorbell_id>` is the ID of the entrance you want to access.
 
-```
-http://localhost:3000/doorbell/:doorbellId
-```
-
-where `:doorbellId` is the ID of the doorbell you want to access.
-
-If you have multiple doorbells, set up a RESTful switch for each of them.
-
----
-
-In `headers`, provide the access token:
-
-```
-Authorization: Bearer ey...vo
-```
+If you have multiple entrances, set up a RESTful switch for each of them.
