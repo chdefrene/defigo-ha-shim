@@ -10,12 +10,12 @@ app.use(bodyParser.text());
 /**
  * Get the current state of the provided doorbell
  */
-app.get("/doorbells/:doorbellId", async (req, res) => {
+app.get("/doorbells/:doorbellId", (req, res) => {
   const { doorbellId } = req.params;
 
-  const state = await getState(doorbellId);
+  const state = getState(doorbellId);
 
-  return res.json(state);
+  res.json(state);
 });
 
 /**
@@ -41,7 +41,7 @@ app.post("/doorbells/:doorbellId", async (req, res) => {
 
   setState(doorbellId);
 
-  return res.status(status).send();
+  res.status(status).send();
 });
 
 app.listen(3000, () => {
