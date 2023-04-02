@@ -8,13 +8,14 @@ export const AUTO_LOCK_TIMEOUT = 6000;
 
 export async function openDoor(
   doorbellId: string,
-  { authorization = "" }: IncomingHttpHeaders
+  { authorization: Authorization = "" }: IncomingHttpHeaders
 ) {
   const { status } = await fetch(
     `${API_BASE_URL}/doorbells/${doorbellId}/open`,
     {
+      method: "GET",
       headers: {
-        authorization,
+        Authorization,
         "x-api-version": "3.0",
       },
     }
