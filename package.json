@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc --project .",
+    "build:docker": "docker build --tag chdefrene/defigo-ha-shim --platform linux/amd64 .",
     "start": "node dist/app"
   },
   "dependencies": {
