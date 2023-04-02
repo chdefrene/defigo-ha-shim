@@ -30,8 +30,6 @@ app.post("/doorbell/:doorbellId", async (req, res) => {
 
   let status = 200;
 
-  type XX = typeof req.headers;
-
   switch (req.body) {
     case "OFF":
       status = await openDoor(doorbellId, req.headers);
