@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Debug" type="NodeJSConfigurationType" path-to-node="/usr/local/bin/ts-node-dev" node-parameters="--respawn --exit-child --transpile-only" path-to-js-file="src/app.ts" working-dir="$PROJECT_DIR$/../defigo-ha-shim">
+    <EXTENSION ID="com.jetbrains.nodejs.run.NodeStartBrowserRunConfigurationExtension">
+      <browser url="http://localhost:1337" />
+    </EXTENSION>
+    <method v="2" />
+  </configuration>
+</component>
