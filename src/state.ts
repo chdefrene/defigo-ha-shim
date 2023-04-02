@@ -44,8 +44,7 @@ export function setState(doorbellId: string) {
     fs.writeFileSync(filePath, encode(state));
 
     setTimeout(() => {
-      state.is_open = true;
-      fs.writeFileSync(filePath, encode(state));
+      fs.unlinkSync(filePath);
     }, AUTO_LOCK_TIMEOUT);
   } catch {}
 }
