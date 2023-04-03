@@ -4,9 +4,6 @@ import type { IncomingHttpHeaders } from "http";
 const API_BASE_URL = "https://admin.defigohome.com/api";
 const API_VERSION = "3.0";
 
-// The Defigo lock will only stay open for ~6 seconds
-export const AUTO_LOCK_TIMEOUT = 6000;
-
 export async function openDoor(
   doorbellId: string,
   { authorization: Authorization = "" }: IncomingHttpHeaders

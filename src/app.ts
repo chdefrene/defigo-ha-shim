@@ -1,5 +1,5 @@
 import express from "express";
-import { getState, setState } from "./state";
+import { getState, LockState, setState } from "./state";
 import bodyParser from "body-parser";
 import { openDoor } from "./defigo";
 
@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 
   const state = getState(doorbellId);
 
-  res.json(state);
+  res.send(state);
 });
 
 /**
@@ -35,13 +35,11 @@ app.post("/", async (req, res) => {
   let status = 200;
 
   switch (req.body) {
-    // Unlock
-    case "ON":
+    case LockState.UNLOCKED:
       status = await openDoor(doorbellId, req.headers);
       break;
 
-    // Lock
-    case "OFF":
+    case LockState.LOCKED:
       break;
   }
 

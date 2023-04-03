@@ -1,16 +1,16 @@
 import path from "path";
 import fs from "fs";
-import { AUTO_LOCK_TIMEOUT } from "./defigo";
 
-interface State {
-  is_open: boolean;
+export enum LockState {
+  LOCKED = "OFF",
+  UNLOCKED = "ON",
 }
 
 function getFilePath(doorbellId: string) {
   return path.join(__dirname, `state_${doorbellId}`);
 }
 
-function encode(state: State) {
+function encode(state: LockState) {
   return Buffer.from(JSON.stringify(state));
 }
 
@@ -21,23 +21,22 @@ function decode(buffer: Buffer) {
 /**
  * Read the state of the provided doorbell from a local file
  */
-export function getState(doorbellId: any): State {
+export function getState(doorbellId: any): LockState {
   try {
     const filePath = getFilePath(doorbellId);
     return decode(fs.readFileSync(filePath));
   } catch {
-    return { is_open: false };
+    return LockState.LOCKED;
   }
 }
 
 /**
  * Write the state of the provided doorbell to a local file.
  * Since the doorbell is configured to auto-lock,
- * the state will be reset after the timeout is exceeded.
+ * the state needs to be reset after the request completes.
  */
-export function setState(doorbellId: string, action: "ON" | "OFF") {
+export function setState(doorbellId: string, state: LockState) {
   const filePath = getFilePath(doorbellId);
-  const state: State = { is_open: action === "ON" };
 
   try {
     fs.writeFileSync(filePath, encode(state));
@@ -47,5 +46,5 @@ export function setState(doorbellId: string, action: "ON" | "OFF") {
     try {
       fs.unlinkSync(filePath);
     } catch {}
-  }, AUTO_LOCK_TIMEOUT);
+  }, 100);
 }

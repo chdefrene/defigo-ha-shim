@@ -24,7 +24,6 @@ switch:
   - platform: rest
     name: Entrance
     resource: http://localhost:3000
-    is_on_template: "{{ value_json.is_open }}"
     params:
       doorbell_id: 1234
     headers:
@@ -43,3 +42,6 @@ If you have multiple entrances, set up a RESTful switch for each of them.
 
 
 * The `Authorization` header contains a bearer token with the Defigo access token.
+
+
+* `Content-Type` needs to be `text/plain`!
