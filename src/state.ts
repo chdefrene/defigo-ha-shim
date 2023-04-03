@@ -21,10 +21,9 @@ function decode(buffer: Buffer) {
 /**
  * Read the state of the provided doorbell from a local file
  */
-export function getState(doorbellId: string): State {
-  const filePath = getFilePath(doorbellId);
-
+export function getState(doorbellId: any): State {
   try {
+    const filePath = getFilePath(doorbellId);
     return decode(fs.readFileSync(filePath));
   } catch {
     return { is_open: false };
@@ -34,7 +33,7 @@ export function getState(doorbellId: string): State {
 /**
  * Write the state of the provided doorbell to a local file.
  * Since the doorbell is configured to auto-lock,
- * the state will be reset after the timout is exceeded.
+ * the state will be reset after the timeout is exceeded.
  */
 export function setState(doorbellId: string, action: "ON" | "OFF") {
   const filePath = getFilePath(doorbellId);
