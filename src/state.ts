@@ -36,15 +36,17 @@ export function getState(doorbellId: string): State {
  * Since the doorbell is configured to auto-lock,
  * the state will be reset after the timout is exceeded.
  */
-export function setState(doorbellId: string) {
+export function setState(doorbellId: string, action: "ON" | "OFF") {
   const filePath = getFilePath(doorbellId);
-  const state: State = { is_open: true };
+  const state: State = { is_open: action === "ON" };
 
   try {
     fs.writeFileSync(filePath, encode(state));
-
-    setTimeout(() => {
-      fs.unlinkSync(filePath);
-    }, AUTO_LOCK_TIMEOUT);
   } catch {}
+
+  setTimeout(() => {
+    try {
+      fs.unlinkSync(filePath);
+    } catch {}
+  }, AUTO_LOCK_TIMEOUT);
 }

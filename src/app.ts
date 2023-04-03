@@ -20,10 +20,10 @@ app.get("/doorbells/:doorbellId", (req, res) => {
 
 /**
  * Set the state of the provided doorbell.
- * Accepts a `text/plain` payload of either "ON" (lock) or "OFF" (unlock).
+ * Accepts a `text/plain` payload of either "OFF" (lock) or "ON" (unlock).
  *
  * Since the doorbell is configured to auto-lock,
- * sending "ON" will not perform any API calls.
+ * sending "OFF" will not perform any API calls.
  */
 app.post("/doorbells/:doorbellId", async (req, res) => {
   const { doorbellId } = req.params;
@@ -31,15 +31,17 @@ app.post("/doorbells/:doorbellId", async (req, res) => {
   let status = 200;
 
   switch (req.body) {
-    case "OFF":
+    // Unlock
+    case "ON":
       status = await openDoor(doorbellId, req.headers);
       break;
-    case "ON":
-    default:
+
+    // Lock
+    case "OFF":
       break;
   }
 
-  setState(doorbellId);
+  setState(doorbellId, req.body);
 
   res.status(status).send();
 });
